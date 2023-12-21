@@ -134,9 +134,15 @@ const deleteProduct = async (req, res) => {
             return res.status(404).json({ mensagem: 'Produto não encontrado' })
         }
 
+        const productInOrder = await knex('pedido_produtos').where('produto_id', id).first()
+
+        if (productInOrder) {
+            return res.status(400).json({ mensagem: 'Este produto esta vinculado a um ou mais pedidos, desta froma, não pode ser deletado' })
+        }
+
         await knex('produtos').where({ id }).delete()
 
-        return res.status(200).json()
+        return res.status(204).json()
     } catch (error) {
         return res.status(500).json({ mensagem: 'Erro interno do servidor' }) 
     }

@@ -35,7 +35,7 @@ route.put('/cliente/:id', validateRequest([clientSchemaBody, schemaParams]), upd
 route.get('/clientes', listClients)
 route.get('/cliente/:id', validateRequest(schemaParams), detailClient)
 
-route.post('/pedido', validateRequest(schemaProductsBody), registerOrder)
+route.post('/pedido', registerOrder)
 route.get('/pedidos', listOrder)
 
 module.exports = route
